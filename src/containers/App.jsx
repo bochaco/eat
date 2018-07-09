@@ -39,13 +39,13 @@ class App extends React.Component
                 >
                     <Col span={ 24 }>
                         <Layout className={ styles.appContainer }>
-                            <Route path="/" render={ ( props ) => <HeaderComponent targetWebId={ user.targetWebId } { ...props } /> } />
+                            <Route path="/" render={ ( props ) => <HeaderComponent webId={ user.webId } { ...props } /> } />
                             <Content>
                                 <Switch>
                                     <Route path="/message" render={ ( props ) => <Messager user={ user } { ...props } /> } />
                                     <Route path="/create/new" render={ ( props ) => <PostForm user={ user } addPost={ addPost } { ...props } /> } />
                                     <Route path="/create" render={ ( props ) => <Redirect to="/create/new" /> } />
-                                    <Route path="/timeline" render={ () => <List posts={ user.posts } inbox={ user.inbox } name={ user.name } /> } />
+                                    <Route path="/timeline" render={ () => <List posts={ user.posts } inbox={ user.inbox } name={ user.webId.name } /> } />
                                     <Route path="/" render={ () => <Redirect to="/timeline" /> } />
 
                                 </Switch>

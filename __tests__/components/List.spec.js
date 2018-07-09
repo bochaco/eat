@@ -42,7 +42,7 @@ describe( 'List', () =>
 
         it( 'should contain an Card component with a post (no inbox)', () =>
         {
-            props = { ...props, posts: [{ text: 'hithere' }] };
+            props = { ...props, posts: [{ content: 'hithere' }] };
             wrapper = shallow( <List { ...props } /> );
             expect( wrapper.find( 'Card' ).length ).toBe( 1 );
         } );
@@ -50,7 +50,7 @@ describe( 'List', () =>
 
         it( 'should contain two Card components with a post and an inbox message', () =>
         {
-            props = { ...props, posts: [{ text: 'hithere' }], inbox: [{ text: 'hello yourself' }] };
+            props = { ...props, posts: [{ content: 'hithere' }], inbox: [{ content: 'hello yourself' }] };
             wrapper = shallow( <List { ...props } /> );
             expect( wrapper.find( 'Card' ).length ).toBe( 2 );
         } );

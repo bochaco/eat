@@ -9,7 +9,7 @@ const { Meta } = Card;
 
 function timeSince( timeStamp )
 {
-console.log("TIME:", timeStamp)
+    console.log( 'TIME:', timeStamp );
     if ( !timeStamp ) return '';
 
     const timeStampDate = new Date( timeStamp );
@@ -60,8 +60,8 @@ class List extends React.Component
 
         const allPosts = [...posts, ...inbox];
 
-        allPosts.sort( ( a, b ) => new Date(b.published) - new Date(a.published) );
-
+        allPosts.sort( ( a, b ) => new Date( b.published ) - new Date( a.published ) );
+        console.log('allPosts', allPosts)
         return (
             <div>
                 <h2>Your Post Timeline, {name || ''}:</h2>
@@ -73,29 +73,30 @@ class List extends React.Component
                 >
                     { allPosts.map( ( post, i ) =>
                     {
-                        const theTimeSince = post.published ? timeSince( new Date(post.published) ) : '';
+                        const theTimeSince = post.published ? timeSince( new Date( post.published ) ) : '';
 
                         if ( post.content )
                         {
-                            return ( <Card
-                                hoverable
-                                key={ i }
-                                title={
-                                    <div>
-                                        {
-                                            post.actor &&
-                                            <div>From: {post.actor}</div>
-                                        }
-                                        <Meta description={ theTimeSince } />
-                                    </div>
+                            return (
+                                <Card
+                                    hoverable
+                                    key={ i }
+                                    title={
+                                        <div>
+                                            {
+                                                post.actor &&
+                                                <div>From: {post.actor}</div>
+                                            }
+                                            <Meta description={ theTimeSince } />
+                                        </div>
                                     }
                                     style={ { margin: '1rem' } }
                                 >
-                                  <Card
-                                    title={ post.summary }
-                                  >
-                                  { post.content}
-                                  </Card>
+                                    <Card
+                                        title={ post.summary }
+                                    >
+                                        { post.content}
+                                    </Card>
                                 </Card>
                             );
                         }

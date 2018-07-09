@@ -1,8 +1,7 @@
 import { TYPES } from '../actions/user_actions';
 
 const initialState = {
-    webId : '',
-    targetWebId : '',
+    webId : {},
     posts : [
     ],
     inbox : [
@@ -19,9 +18,8 @@ export default ( state = initialState, action ) =>
         case TYPES.SET_CURRENT_USER:
         {
             console.log("Let's get the posts then")
-            const newUser = { ...payload, id: `safe://josh.${payload.id}` };
-            const targetUser = { ...payload, id: `safe://josh.${payload.id}` };
-            return { ...state, webId: newUser, targetWebId: targetUser };
+            const newUser = { ...payload };
+            return { ...state, webId: newUser };
         }
         case TYPES.ADD_POST:
         {

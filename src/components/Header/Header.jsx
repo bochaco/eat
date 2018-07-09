@@ -17,12 +17,14 @@ const HeaderComponent = ( props ) =>
         location.startsWith( PATHS[path] ) ? selectedKeys.push( PATHS[path] ) : '';
     } );
 
+    const { webId } = props;
+
     return (
         <div>
             <h1>Not Twitter</h1>
-            <h3>{ props.targetWebId.id }</h3>
-            <h3>{ props.targetWebId.name }</h3>
-            <h3>{ props.targetWebId.nick }</h3>
+            <h3>{ webId['@id'] }</h3>
+            <h3>{ webId.name }</h3>
+            <h3>{ webId.nick }</h3>
             <Menu mode="horizontal" selectedKeys={ selectedKeys }>
                 <Menu.Item key={ PATHS.TIMELINE }>
                     <NavLink to={ PATHS.TIMELINE } >Home</NavLink>

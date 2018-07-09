@@ -13,7 +13,7 @@ export const TYPES = {
 // } = createActions( TYPES.ADD_POST );
 // }
 
-/*cosnt generatePostRdf = (safeApp) =>
+/* cosnt generatePostRdf = (safeApp) =>
 {
     const postsContainer =
       await safeApp.mutableData.newPublic(subdomainLocation, consts.TAG_TYPE_DNS);
@@ -32,22 +32,19 @@ export const TYPES = {
 }
 */
 
-const mimicExisingPostContainer = async (targetWebId) =>
+const mimicExisingPostContainer = async ( targetWebId ) =>
 {
-  console.log("MIMICING:", targetWebId)
-  const appInfo = {
-    id: "net.maidsafe.example",
-    name: 'Example SAFE App',
-    vendor: 'MaidSafe.net Ltd'
-  }
-  const safeApp = await window.safe.initialiseApp(appInfo);
-  const authReqUri = await safeApp.auth.genAuthUri();
-  console.log("AUTH:", authReqUri)
-  const authUri = await window.safe.authorise(authReqUri);
-  console.log("AUTH:", authUri)
-
-
-
+    console.log( 'MIMICING:', targetWebId );
+    const appInfo = {
+        id     : 'net.maidsafe.example',
+        name   : 'Example SAFE App',
+        vendor : 'MaidSafe.net Ltd'
+    };
+    const safeApp = await window.safe.initialiseApp( appInfo );
+    const authReqUri = await safeApp.auth.genAuthUri();
+    console.log( 'AUTH:', authReqUri );
+    const authUri = await window.safe.authorise( authReqUri );
+    console.log( 'AUTH:', authUri );
 
 
 /*
@@ -66,38 +63,42 @@ const mimicExisingPostContainer = async (targetWebId) =>
   rdf.add(webIdWithHashTag, vocabs.FOAF('image'), rdf.literal(profile.avatar)); // TODO: this needs to be created as an LDP-NR
   rdf.add(webIdWithHashTag, vocabs.FOAF('website'), rdf.literal(profile.website));
 
-  const location = await rdf.commit();*/
-}
+  const location = await rdf.commit(); */
+};
 
-const postNewPost = async (safeApp, webId, targetWebId, newPost) =>
+const postNewPost = async ( safeApp, webId, targetWebId, newPost ) =>
 {
-    await mimicExisingPostContainer(targetWebId);
+    await mimicExisingPostContainer( targetWebId );
 
-    console.log("TARGET WEB ID:", targetWebId)
+    console.log( 'TARGET WEB ID:', targetWebId );
     const postRdf = {
-      "@context": "https://www.w3.org/ns/activitystreams",
-      "type": "Note",
-      "actor": webId.id,
-      "summary": newPost.summary,
-      "published": newPost.published,
-      "content": newPost.content
+        '@context' : 'https://www.w3.org/ns/activitystreams',
+        type       : 'Note',
+        actor      : webId.id,
+        summary    : newPost.summary,
+        published  : newPost.published,
+        content    : newPost.content
     };
 
     const postsContainer =
-      await safeApp.mutableData.newPublic(targetWebId.posts.xorname, targetWebId.posts.typeTag);
+      await safeApp.mutableData.newPublic( targetWebId.posts.xorname, targetWebId.posts.typeTag );
 
-    try {
-      await postsContainer.quickSetup();
-    } catch (err) {
-      // If the posts container already exists we are then ok
-      if (err.code !== -104) {
-        throw err;
-      }
+    try
+    {
+        await postsContainer.quickSetup();
+    }
+    catch ( err )
+    {
+        // If the posts container already exists we are then ok
+        if ( err.code !== -104 )
+        {
+            throw err;
+        }
     }
 
-    const postsRdf = postsContainer.emulateAs('rdf');
-    //const vocabs = this.getVocabs(postsRdf);
-/*
+    const postsRdf = postsContainer.emulateAs( 'rdf' );
+    // const vocabs = this.getVocabs(postsRdf);
+    /*
     // add to or create subdomain container.
     const fullUri = `safe://${publicName}`;
     // TODO: parse the uri to extract the subdomain
@@ -128,11 +129,12 @@ const postNewPost = async (safeApp, webId, targetWebId, newPost) =>
     return location;
 */
 
-    return new Promise((resolve, reject) => {
-      console.log("NEW POST:", postRdf);
-      resolve(postRdf);
-    });
-}
+    return new Promise( ( resolve, reject ) =>
+    {
+        console.log( 'NEW POST:', postRdf );
+        resolve( postRdf );
+    } );
+};
 
 export const {
     addPost,
@@ -141,20 +143,20 @@ export const {
 } = createActions( {
     [TYPES.ADD_POST] : async ( webId, targetWebId, post ) =>
     {
-        const newPost = await postNewPost(webId, targetWebId, post);
+        const newPost = await postNewPost( webId, targetWebId, post );
         return newPost;
     },
-    [TYPES.SET_CURRENT_USER] : async ( post ) =>
+    [TYPES.SET_CURRENT_USER] : async ( user ) =>
     {
-        const x = new Promise( ( resolve, reject ) =>
-        {
-            console.log( 'Should do SAFE things for getting User if needed...' );
-            resolve( post );
-        } );
+        // const x = new Promise( ( resolve, reject ) =>
+        // {
+        //     console.log( 'Should do SAFE things for getting User if needed...' );
+        //     resolve( user );
+        // } );
+        //
+        // await x;
 
-        await x;
-
-        return x;
+        return user;
     },
     [TYPES.SEND_MESSAGE] : async ( post ) =>
     {
